@@ -19,7 +19,7 @@ public:
     /**
      * Makes socket listen to specified port in non-blocking mode.
      * @param port
-     * @return
+     * @return true on success
      */
     bool Open(uint16_t port);
 
