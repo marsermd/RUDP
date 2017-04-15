@@ -1,11 +1,11 @@
 #include <iostream>
 #include <cstring>
-#include "Core/UDP/Socket.h"
+#include "Core/UDP/Sockets/Socket.h"
 
 uint16_t listenPort = 0;
 IPTarget target;
 bool sending = false;
-Socket *sock;
+SocketBase *sock;
 
 void CreateSocket()
 {

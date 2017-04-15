@@ -8,25 +8,26 @@
 
 #include <cstddef>
 #include <unistd.h>
-#include "IPTarget.h"
+#include "../IPTarget.h"
+#include "SocketBase.h"
 
-class Socket
+class Socket : public SocketBase
 {
 public:
     Socket();
-    ~Socket();
+    virtual ~Socket();
 
     /**
      * Makes socket listen to specified port in non-blocking mode.
      * @param port
      * @return true on success
      */
-    bool Open(uint16_t port);
+    virtual bool Open(uint16_t port);
 
     /**
      * Frees it's port
      */
-    void Close();
+    virtual void Close();
 
     /**
      * Sends packet to destination
@@ -35,9 +36,9 @@ public:
      * @param size size of message in bytes
      * @return true on success
      */
-    bool Send(const IPTarget &destination,
-              const void *data,
-              size_t size);
+    virtual bool Send(const IPTarget &destination,
+                      const void *data,
+                      size_t size);
 
     /**
      * Receives packet from target.
@@ -50,9 +51,9 @@ public:
      * @param size buffer size in bytes
      * @return size of read data. If error occurred, result is < 0
      */
-    ssize_t Receive(IPTarget &sender,
-                    void *data,
-                    size_t size);
+    virtual ssize_t Receive(IPTarget &sender,
+                            void *data,
+                            size_t size);
 
 
     /**
@@ -66,9 +67,9 @@ public:
      * @param nonBlocking
      * @return true on success
      */
-    bool SetNonBlocking(bool nonBlocking);
+    virtual bool SetNonBlocking(bool nonBlocking);
 
-    bool IsOpen() const;
+    virtual bool IsOpen() const;
 
 private:
     int _handle;
