@@ -46,7 +46,7 @@ public:
      * program will stop it's execution until packet is received.
      * If in the same situation socket is non-blocking, receive will just return 0 immediately.
      *
-     * @param sender port we are trying to get packets from
+     * @param sender target we are trying to get packets from. It is updated if we are listening to many targets at once
      * @param data data buffer to which packets are read
      * @param size buffer size in bytes
      * @return size of read data. If error occurred, result is < 0
