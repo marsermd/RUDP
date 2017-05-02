@@ -3,7 +3,7 @@ project(RUDP)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES src/main.cpp src/Core/UDP/Sockets/Socket.cpp src/Core/UDP/Sockets/Socket.h src/Core/UDP/IPTarget.cpp src/Core/UDP/IPTarget.h src/Core/UDP/Sockets/SocketBase.h)
+set(SOURCE_FILES src/main.cpp src/Core/UDP/Sockets/Socket.cpp src/Core/UDP/Sockets/Socket.h src/Core/UDP/IPTarget.cpp src/Core/UDP/IPTarget.h src/Core/UDP/Sockets/SocketBase.h src/Core/UDP/Connection/UDPConnection.cpp src/Core/UDP/Connection/UDPConnection.h src/Core/UDP/Connection/UDPMessage.cpp src/Core/UDP/Connection/UDPMessage.h)
 add_executable(RUDP ${SOURCE_FILES})
 
 add_compile_options("-include cstdint")

@@ -38,3 +38,27 @@ uint16_t IPTarget::GetPort() const
 {
     return _port;
 }
+
+bool IPTarget::operator<(const IPTarget &rhs) const
+{
+    if (_address < rhs._address)
+        return true;
+    if (rhs._address < _address)
+        return false;
+    return _port < rhs._port;
+}
+
+bool IPTarget::operator>(const IPTarget &rhs) const
+{
+    return rhs < *this;
+}
+
+bool IPTarget::operator<=(const IPTarget &rhs) const
+{
+    return !(rhs < *this);
+}
+
+bool IPTarget::operator>=(const IPTarget &rhs) const
+{
+    return !(*this < rhs);
+}

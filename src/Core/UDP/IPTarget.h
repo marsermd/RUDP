@@ -25,6 +25,14 @@ public:
 
     uint16_t GetPort() const;
 
+    bool operator<(const IPTarget &rhs) const;
+
+    bool operator>(const IPTarget &rhs) const;
+
+    bool operator<=(const IPTarget &rhs) const;
+
+    bool operator>=(const IPTarget &rhs) const;
+
 private:
     uint32_t _address;
     uint16_t _port;
