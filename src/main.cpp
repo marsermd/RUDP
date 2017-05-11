@@ -141,8 +141,8 @@ int main(int argc, char **argv)
         printf("failed to open socket!\n");
     }
 
-    UDPConnection A(socketA);
-    UDPConnection B(socketB);
+    UDPConnection A(socketA, IPTarget::Any());
+    UDPConnection B(socketB, IPTarget::Any());
 
     A.SetOnConnected(OnConnectedA);
     B.SetOnConnected(OnConnectedB);

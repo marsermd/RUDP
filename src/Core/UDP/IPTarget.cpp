@@ -63,7 +63,17 @@ bool IPTarget::operator>=(const IPTarget &rhs) const
     return !(*this < rhs);
 }
 
+static IPTarget ANY;
 const IPTarget& IPTarget::Any()
 {
-    return IPTarget();
+    return ANY;
+}
+
+bool IPTarget::Includes(const IPTarget &rhs) const
+{
+    if (_address == 0 && _port == 0)
+    {
+        return true;
+    }
+    return rhs._address == _address && rhs._port == _port;
 }
