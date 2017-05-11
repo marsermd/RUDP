@@ -10,7 +10,21 @@
 class IPTarget
 {
 public:
+    /**
+     * Sets address and port to be zero.
+     * Listening to this target means listening to all targets.
+     * Sending to this address is invalid.
+     * Use IPTarget::ANY if it is really what you are intended to do
+     */
     IPTarget();
+
+    /**
+     * Sets address and port to be zero.
+     * Listening to this target means listening to all targets.
+     * Sending to this address is invalid.
+     * @return IPTarget with given parameters
+     */
+    static const IPTarget & Any();
 
     IPTarget(uint8_t a,
              uint8_t b,
@@ -32,6 +46,14 @@ public:
     bool operator<=(const IPTarget &rhs) const;
 
     bool operator>=(const IPTarget &rhs) const;
+
+    /**
+     * Checks if receiving from this IPTarget also means receiving from rhs.
+     * That is when they are equal or when current adress and port are zero
+     * @param rhs
+     * @return
+     */
+    bool Includes(const IPTarget &rhs) const;
 
 private:
     uint32_t _address;

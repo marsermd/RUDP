@@ -1,15 +1,16 @@
 #include <iostream>
 #include <cstring>
 #include "Core/UDP/Sockets/Socket.h"
+#include "Core/UDP/Connection/UDPConnection.h"
 
 uint16_t listenPort = 0;
 IPTarget target;
 bool sending = false;
-SocketBase *sock;
+std::shared_ptr<SocketBase> sock;
 
 void CreateSocket()
 {
-    sock = new Socket();
+    sock = std::make_shared<Socket>();
     if (!sock->Open(listenPort))
     {
         printf("failed to open socket!\n");
@@ -19,7 +20,6 @@ void CreateSocket()
 void RemoveSoket()
 {
     sock->Close();
-    delete sock;
 }
 
 void SendPackets()
@@ -78,22 +78,91 @@ bool ParseCmdLine(int argc, char **argv)
     return true;
 }
 
+void OnConnectedA(IPTarget target)
+{
+    std::cout << target.GetPort() << " Connected to A" << std::endl;
+}
+void OnConnectedB(IPTarget target)
+{
+    std::cout << target.GetPort() << " Connected to B" << std::endl;
+}
+
+void OnDisconnectedA(IPTarget target)
+{
+    std::cout << target.GetPort() << " Disonnected from A" << std::endl;
+}
+void OnDisconnectedB(IPTarget target)
+{
+    std::cout << target.GetPort() << " Disonnected from B" << std::endl;
+}
+
+void OnMessageReceivedA(IPTarget target, std::vector<uint8_t> message)
+{
+    char* messageStr = reinterpret_cast<char*>(&message[0]);
+    std::cout << "A received " << messageStr << "from " << target.GetPort() << std::endl;
+}
+void OnMessageReceivedB(IPTarget target, std::vector<uint8_t> message)
+{
+    char* messageStr = reinterpret_cast<char*>(&message[0]);
+    std::cout << "B received " << messageStr << "from " << target.GetPort() << std::endl;
+}
+
+
 int main(int argc, char **argv)
 {
-    if (!ParseCmdLine(argc, argv))
+//    if (!ParseCmdLine(argc, argv))
+//    {
+//        return 1;
+//    }
+//
+//    CreateSocket();
+//
+//    if (sending)
+//    {
+//        SendPackets();
+//    }
+//    else
+//    {
+//        ReceivePackets();
+//    }
+
+    IPTarget a(127, 0, 0, 1, 8092);
+    IPTarget b(127, 0, 0, 1, 8094);
+
+    auto socketA = std::make_shared<Socket>();
+    if (!socketA->Open(a.GetPort()))
     {
-        return 1;
+        printf("failed to open socket!\n");
     }
 
-    CreateSocket();
-
-    if (sending)
+    auto socketB = std::make_shared<Socket>();
+    if (!socketB->Open(b.GetPort()))
     {
-        SendPackets();
+        printf("failed to open socket!\n");
     }
-    else
+
+    UDPConnection A(socketA);
+    UDPConnection B(socketB);
+
+    A.SetOnConnected(OnConnectedA);
+    B.SetOnConnected(OnConnectedB);
+
+    A.SetOnDisconnected(OnDisconnectedA);
+    B.SetOnDisconnected(OnDisconnectedB);
+
+    A.SetOnMessageReceived(OnMessageReceivedA);
+    B.SetOnMessageReceived(OnMessageReceivedB);
+
+    char message[] = "hello";
+
+    while (true)
     {
-        ReceivePackets();
+        A.PushMessage(UDPMessage(b, (const uint8_t *) message, 5));
+        B.PushMessage(UDPMessage(a, (const uint8_t *) message, 5));
+        A.Update();
+        B.Update();
+
+        sleep(1);
     }
 
     return 0;

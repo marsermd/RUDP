@@ -62,12 +62,15 @@ void UDPConnection::RemoveTimedoutConnections()
 
 void UDPConnection::ReceiveMessages()
 {
-    IPTarget currentTarget = _target;
+    IPTarget sender;
     ssize_t read;
-    while ((read = _socket->Receive(_target, _buffer, _bufferSize)) > 0)
+    while ((read = _socket->Receive(sender, _buffer, _bufferSize)) > 0)
     {
-
-        ReceiveMessage(currentTarget, read);
+        if (_target.Includes(sender))
+        {
+            //We don't want accidentally get some messages from targets we are not communicating with.
+            ReceiveMessage(sender, read);
+        }
     }
 
     // if read == 0, there is just nothing to read

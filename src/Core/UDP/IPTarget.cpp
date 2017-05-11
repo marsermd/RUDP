@@ -62,3 +62,8 @@ bool IPTarget::operator>=(const IPTarget &rhs) const
 {
     return !(*this < rhs);
 }
+
+const IPTarget& IPTarget::Any()
+{
+    return IPTarget();
+}
