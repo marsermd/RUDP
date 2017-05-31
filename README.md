@@ -1,5 +1,8 @@
 This is a collaboration project on reliable protocol over UDP for Linux systems.
 
+**Dependencies**
+- install protobuf to be able to compile this project
+
 **Planed features:**
 - semi-reliability(with given timeout)
 - reliability(packets will get to the target until connection is lost)
