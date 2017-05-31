@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cstring>
-#include "Core/UDP/Sockets/Socket.h"
-#include "Core/UDP/Connection/UDPConnection.h"
+#include <Messages/ReliableMessage.pb.h>
+#include <Core/UDP/Connection/Reliability/ReliableConnection.h>
+#include "Messages/StringMessage.pb.h"
 
 uint16_t listenPort = 0;
 IPTarget target;
@@ -96,15 +97,13 @@ void OnDisconnectedB(IPTarget target)
     std::cout << target.GetPort() << " Disonnected from B" << std::endl;
 }
 
-void OnMessageReceivedA(IPTarget target, std::vector<uint8_t> message)
+void OnMessageReceivedA(IPTarget target, std::shared_ptr<StringMessage> message)
 {
-    char* messageStr = reinterpret_cast<char*>(&message[0]);
-    std::cout << "A received " << messageStr << "from " << target.GetPort() << std::endl;
+    std::cout << "A received " << message->value() << "from " << target.GetPort() << std::endl;
 }
-void OnMessageReceivedB(IPTarget target, std::vector<uint8_t> message)
+void OnMessageReceivedB(IPTarget target, std::shared_ptr<StringMessage> message)
 {
-    char* messageStr = reinterpret_cast<char*>(&message[0]);
-    std::cout << "B received " << messageStr << "from " << target.GetPort() << std::endl;
+    std::cout << "B received " << message->value() << "from " << target.GetPort() << std::endl;
 }
 
 
@@ -129,20 +128,23 @@ int main(int argc, char **argv)
     IPTarget a(127, 0, 0, 1, 8092);
     IPTarget b(127, 0, 0, 1, 8094);
 
-    auto socketA = std::make_shared<Socket>();
+    auto socketA = std::unique_ptr<SocketBase>(new Socket());
     if (!socketA->Open(a.GetPort()))
     {
         printf("failed to open socket!\n");
     }
 
-    auto socketB = std::make_shared<Socket>();
+    auto socketB = std::unique_ptr<SocketBase>(new Socket());
     if (!socketB->Open(b.GetPort()))
     {
         printf("failed to open socket!\n");
     }
 
-    UDPConnection A(socketA, IPTarget::Any());
-    UDPConnection B(socketB, IPTarget::Any());
+    auto unreliableA = std::unique_ptr<ConnectionBase<ReliableMessage>>(new UDPConnection<ReliableMessage>(socketA, IPTarget::Any()));
+    auto unreliableB = std::unique_ptr<ConnectionBase<ReliableMessage>>(new UDPConnection<ReliableMessage>(socketB, IPTarget::Any()));
+
+    ReliableConnection<StringMessage> A(unreliableA);
+    ReliableConnection<StringMessage> B(unreliableB);
 
     A.SetOnConnected(OnConnectedA);
     B.SetOnConnected(OnConnectedB);
@@ -153,12 +155,13 @@ int main(int argc, char **argv)
     A.SetOnMessageReceived(OnMessageReceivedA);
     B.SetOnMessageReceived(OnMessageReceivedB);
 
-    char message[] = "hello";
-
     while (true)
     {
-        A.PushMessage(UDPMessage(b, (const uint8_t *) message, 5));
-        B.PushMessage(UDPMessage(a, (const uint8_t *) message, 5));
+        auto message = std::make_shared<StringMessage>();
+        message->set_value("hello", 5);
+
+        A.PushMessage(b, message);
+        B.PushMessage(a, message);
         A.Update();
         B.Update();
 
