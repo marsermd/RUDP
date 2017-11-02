@@ -128,11 +128,11 @@ class ReliableMessage : public ::google::protobuf::Message /* @@protoc_insertion
   ::std::string* release_payload();
   void set_allocated_payload(::std::string* payload);
 
-  // uint32 protocolId = 1;
-  void clear_protocolid();
+  // uint32 protocol_id = 1;
+  void clear_protocol_id();
   static const int kProtocolIdFieldNumber = 1;
-  ::google::protobuf::uint32 protocolid() const;
-  void set_protocolid(::google::protobuf::uint32 value);
+  ::google::protobuf::uint32 protocol_id() const;
+  void set_protocol_id(::google::protobuf::uint32 value);
 
   // uint32 sequence = 2;
   void clear_sequence();
@@ -146,21 +146,21 @@ class ReliableMessage : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::uint32 ack() const;
   void set_ack(::google::protobuf::uint32 value);
 
-  // uint32 ackBitmask = 4;
-  void clear_ackbitmask();
+  // uint32 ack_bitmask = 4;
+  void clear_ack_bitmask();
   static const int kAckBitmaskFieldNumber = 4;
-  ::google::protobuf::uint32 ackbitmask() const;
-  void set_ackbitmask(::google::protobuf::uint32 value);
+  ::google::protobuf::uint32 ack_bitmask() const;
+  void set_ack_bitmask(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:ReliableMessage)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr payload_;
-  ::google::protobuf::uint32 protocolid_;
+  ::google::protobuf::uint32 protocol_id_;
   ::google::protobuf::uint32 sequence_;
   ::google::protobuf::uint32 ack_;
-  ::google::protobuf::uint32 ackbitmask_;
+  ::google::protobuf::uint32 ack_bitmask_;
   mutable int _cached_size_;
   friend struct protobuf_ReliableMessage_2eproto::TableStruct;
 };
@@ -172,18 +172,18 @@ class ReliableMessage : public ::google::protobuf::Message /* @@protoc_insertion
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
 // ReliableMessage
 
-// uint32 protocolId = 1;
-inline void ReliableMessage::clear_protocolid() {
-  protocolid_ = 0u;
+// uint32 protocol_id = 1;
+inline void ReliableMessage::clear_protocol_id() {
+  protocol_id_ = 0u;
 }
-inline ::google::protobuf::uint32 ReliableMessage::protocolid() const {
-  // @@protoc_insertion_point(field_get:ReliableMessage.protocolId)
-  return protocolid_;
+inline ::google::protobuf::uint32 ReliableMessage::protocol_id() const {
+  // @@protoc_insertion_point(field_get:ReliableMessage.protocol_id)
+  return protocol_id_;
 }
-inline void ReliableMessage::set_protocolid(::google::protobuf::uint32 value) {
+inline void ReliableMessage::set_protocol_id(::google::protobuf::uint32 value) {
   
-  protocolid_ = value;
-  // @@protoc_insertion_point(field_set:ReliableMessage.protocolId)
+  protocol_id_ = value;
+  // @@protoc_insertion_point(field_set:ReliableMessage.protocol_id)
 }
 
 // uint32 sequence = 2;
@@ -214,18 +214,18 @@ inline void ReliableMessage::set_ack(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:ReliableMessage.ack)
 }
 
-// uint32 ackBitmask = 4;
-inline void ReliableMessage::clear_ackbitmask() {
-  ackbitmask_ = 0u;
+// uint32 ack_bitmask = 4;
+inline void ReliableMessage::clear_ack_bitmask() {
+  ack_bitmask_ = 0u;
 }
-inline ::google::protobuf::uint32 ReliableMessage::ackbitmask() const {
-  // @@protoc_insertion_point(field_get:ReliableMessage.ackBitmask)
-  return ackbitmask_;
+inline ::google::protobuf::uint32 ReliableMessage::ack_bitmask() const {
+  // @@protoc_insertion_point(field_get:ReliableMessage.ack_bitmask)
+  return ack_bitmask_;
 }
-inline void ReliableMessage::set_ackbitmask(::google::protobuf::uint32 value) {
+inline void ReliableMessage::set_ack_bitmask(::google::protobuf::uint32 value) {
   
-  ackbitmask_ = value;
-  // @@protoc_insertion_point(field_set:ReliableMessage.ackBitmask)
+  ack_bitmask_ = value;
+  // @@protoc_insertion_point(field_set:ReliableMessage.ack_bitmask)
 }
 
 // bytes payload = 5;

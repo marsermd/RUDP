@@ -63,6 +63,11 @@ bool IPTarget::operator>=(const IPTarget &rhs) const
     return !(*this < rhs);
 }
 
+bool IPTarget::operator==(const IPTarget &rhs) const
+{
+    return _address == rhs._address && _port == rhs._port;
+}
+
 static IPTarget ANY;
 const IPTarget& IPTarget::Any()
 {
@@ -77,3 +82,10 @@ bool IPTarget::Includes(const IPTarget &rhs) const
     }
     return rhs._address == _address && rhs._port == _port;
 }
+
+size_t IPTarget::GetHashcode() const
+{
+    //todo: not the best way to combine hashes
+    return std::hash<uint32_t>()(_address) ^ std::hash<uint16_t>()(_port);
+}
+

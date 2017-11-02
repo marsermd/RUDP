@@ -5,7 +5,8 @@
 #ifndef RUDP_IPTARGET_H
 #define RUDP_IPTARGET_H
 
-#include <stdint-gcc.h>
+#include <cstdint>
+#include <functional>
 
 class IPTarget
 {
@@ -47,6 +48,8 @@ public:
 
     bool operator>=(const IPTarget &rhs) const;
 
+    bool operator==(const IPTarget &rhs) const;
+
     /**
      * Checks if receiving from this IPTarget also means receiving from rhs.
      * That is when they are equal or when current adress and port are zero
@@ -55,10 +58,24 @@ public:
      */
     bool Includes(const IPTarget &rhs) const;
 
+    size_t GetHashcode() const;
+
 private:
     uint32_t _address;
     uint16_t _port;
 };
 
+namespace std {
+
+    template <>
+    struct hash<IPTarget>
+    {
+        std::size_t operator()(const IPTarget& target) const
+        {
+            return target.GetHashcode();
+        }
+    };
+
+}
 
 #endif //RUDP_IPTARGET_H

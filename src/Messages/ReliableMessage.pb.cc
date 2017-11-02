@@ -48,10 +48,10 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, protocolid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, protocol_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, sequence_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, ack_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, ackbitmask_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, ack_bitmask_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ReliableMessage, payload_),
 };
 
@@ -105,13 +105,13 @@ void InitDefaults() {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] = {
-      "\n\025ReliableMessage.proto\"i\n\017ReliableMessa"
-      "ge\022\022\n\nprotocolId\030\001 \001(\r\022\020\n\010sequence\030\002 \001(\r"
-      "\022\013\n\003ack\030\003 \001(\r\022\022\n\nackBitmask\030\004 \001(\r\022\017\n\007pay"
-      "load\030\005 \001(\014b\006proto3"
+      "\n\025ReliableMessage.proto\"k\n\017ReliableMessa"
+      "ge\022\023\n\013protocol_id\030\001 \001(\r\022\020\n\010sequence\030\002 \001("
+      "\r\022\013\n\003ack\030\003 \001(\r\022\023\n\013ack_bitmask\030\004 \001(\r\022\017\n\007p"
+      "ayload\030\005 \001(\014b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 138);
+      descriptor, 140);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ReliableMessage.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
@@ -158,16 +158,16 @@ ReliableMessage::ReliableMessage(const ReliableMessage& from)
   if (from.payload().size() > 0) {
     payload_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payload_);
   }
-  ::memcpy(&protocolid_, &from.protocolid_,
-    reinterpret_cast<char*>(&ackbitmask_) -
-    reinterpret_cast<char*>(&protocolid_) + sizeof(ackbitmask_));
+  ::memcpy(&protocol_id_, &from.protocol_id_,
+    reinterpret_cast<char*>(&ack_bitmask_) -
+    reinterpret_cast<char*>(&protocol_id_) + sizeof(ack_bitmask_));
   // @@protoc_insertion_point(copy_constructor:ReliableMessage)
 }
 
 void ReliableMessage::SharedCtor() {
   payload_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&protocolid_, 0, reinterpret_cast<char*>(&ackbitmask_) -
-    reinterpret_cast<char*>(&protocolid_) + sizeof(ackbitmask_));
+  ::memset(&protocol_id_, 0, reinterpret_cast<char*>(&ack_bitmask_) -
+    reinterpret_cast<char*>(&protocol_id_) + sizeof(ack_bitmask_));
   _cached_size_ = 0;
 }
 
@@ -206,8 +206,8 @@ ReliableMessage* ReliableMessage::New(::google::protobuf::Arena* arena) const {
 void ReliableMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:ReliableMessage)
   payload_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&protocolid_, 0, reinterpret_cast<char*>(&ackbitmask_) -
-    reinterpret_cast<char*>(&protocolid_) + sizeof(ackbitmask_));
+  ::memset(&protocol_id_, 0, reinterpret_cast<char*>(&ack_bitmask_) -
+    reinterpret_cast<char*>(&protocol_id_) + sizeof(ack_bitmask_));
 }
 
 bool ReliableMessage::MergePartialFromCodedStream(
@@ -220,14 +220,14 @@ bool ReliableMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 protocolId = 1;
+      // uint32 protocol_id = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &protocolid_)));
+                 input, &protocol_id_)));
         } else {
           goto handle_unusual;
         }
@@ -262,14 +262,14 @@ bool ReliableMessage::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 ackBitmask = 4;
+      // uint32 ack_bitmask = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(32u)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &ackbitmask_)));
+                 input, &ack_bitmask_)));
         } else {
           goto handle_unusual;
         }
@@ -315,9 +315,9 @@ void ReliableMessage::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 protocolId = 1;
-  if (this->protocolid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->protocolid(), output);
+  // uint32 protocol_id = 1;
+  if (this->protocol_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->protocol_id(), output);
   }
 
   // uint32 sequence = 2;
@@ -330,9 +330,9 @@ void ReliableMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->ack(), output);
   }
 
-  // uint32 ackBitmask = 4;
-  if (this->ackbitmask() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->ackbitmask(), output);
+  // uint32 ack_bitmask = 4;
+  if (this->ack_bitmask() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->ack_bitmask(), output);
   }
 
   // bytes payload = 5;
@@ -350,9 +350,9 @@ void ReliableMessage::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 protocolId = 1;
-  if (this->protocolid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->protocolid(), target);
+  // uint32 protocol_id = 1;
+  if (this->protocol_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->protocol_id(), target);
   }
 
   // uint32 sequence = 2;
@@ -365,9 +365,9 @@ void ReliableMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->ack(), target);
   }
 
-  // uint32 ackBitmask = 4;
-  if (this->ackbitmask() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->ackbitmask(), target);
+  // uint32 ack_bitmask = 4;
+  if (this->ack_bitmask() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->ack_bitmask(), target);
   }
 
   // bytes payload = 5;
@@ -392,11 +392,11 @@ size_t ReliableMessage::ByteSizeLong() const {
         this->payload());
   }
 
-  // uint32 protocolId = 1;
-  if (this->protocolid() != 0) {
+  // uint32 protocol_id = 1;
+  if (this->protocol_id() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->protocolid());
+        this->protocol_id());
   }
 
   // uint32 sequence = 2;
@@ -413,11 +413,11 @@ size_t ReliableMessage::ByteSizeLong() const {
         this->ack());
   }
 
-  // uint32 ackBitmask = 4;
-  if (this->ackbitmask() != 0) {
+  // uint32 ack_bitmask = 4;
+  if (this->ack_bitmask() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->ackbitmask());
+        this->ack_bitmask());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -453,8 +453,8 @@ void ReliableMessage::MergeFrom(const ReliableMessage& from) {
 
     payload_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.payload_);
   }
-  if (from.protocolid() != 0) {
-    set_protocolid(from.protocolid());
+  if (from.protocol_id() != 0) {
+    set_protocol_id(from.protocol_id());
   }
   if (from.sequence() != 0) {
     set_sequence(from.sequence());
@@ -462,8 +462,8 @@ void ReliableMessage::MergeFrom(const ReliableMessage& from) {
   if (from.ack() != 0) {
     set_ack(from.ack());
   }
-  if (from.ackbitmask() != 0) {
-    set_ackbitmask(from.ackbitmask());
+  if (from.ack_bitmask() != 0) {
+    set_ack_bitmask(from.ack_bitmask());
   }
 }
 
@@ -491,10 +491,10 @@ void ReliableMessage::Swap(ReliableMessage* other) {
 }
 void ReliableMessage::InternalSwap(ReliableMessage* other) {
   payload_.Swap(&other->payload_);
-  std::swap(protocolid_, other->protocolid_);
+  std::swap(protocol_id_, other->protocol_id_);
   std::swap(sequence_, other->sequence_);
   std::swap(ack_, other->ack_);
-  std::swap(ackbitmask_, other->ackbitmask_);
+  std::swap(ack_bitmask_, other->ack_bitmask_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
@@ -506,18 +506,18 @@ void ReliableMessage::InternalSwap(ReliableMessage* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // ReliableMessage
 
-// uint32 protocolId = 1;
-void ReliableMessage::clear_protocolid() {
-  protocolid_ = 0u;
+// uint32 protocol_id = 1;
+void ReliableMessage::clear_protocol_id() {
+  protocol_id_ = 0u;
 }
-::google::protobuf::uint32 ReliableMessage::protocolid() const {
-  // @@protoc_insertion_point(field_get:ReliableMessage.protocolId)
-  return protocolid_;
+::google::protobuf::uint32 ReliableMessage::protocol_id() const {
+  // @@protoc_insertion_point(field_get:ReliableMessage.protocol_id)
+  return protocol_id_;
 }
-void ReliableMessage::set_protocolid(::google::protobuf::uint32 value) {
+void ReliableMessage::set_protocol_id(::google::protobuf::uint32 value) {
   
-  protocolid_ = value;
-  // @@protoc_insertion_point(field_set:ReliableMessage.protocolId)
+  protocol_id_ = value;
+  // @@protoc_insertion_point(field_set:ReliableMessage.protocol_id)
 }
 
 // uint32 sequence = 2;
@@ -548,18 +548,18 @@ void ReliableMessage::set_ack(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:ReliableMessage.ack)
 }
 
-// uint32 ackBitmask = 4;
-void ReliableMessage::clear_ackbitmask() {
-  ackbitmask_ = 0u;
+// uint32 ack_bitmask = 4;
+void ReliableMessage::clear_ack_bitmask() {
+  ack_bitmask_ = 0u;
 }
-::google::protobuf::uint32 ReliableMessage::ackbitmask() const {
-  // @@protoc_insertion_point(field_get:ReliableMessage.ackBitmask)
-  return ackbitmask_;
+::google::protobuf::uint32 ReliableMessage::ack_bitmask() const {
+  // @@protoc_insertion_point(field_get:ReliableMessage.ack_bitmask)
+  return ack_bitmask_;
 }
-void ReliableMessage::set_ackbitmask(::google::protobuf::uint32 value) {
+void ReliableMessage::set_ack_bitmask(::google::protobuf::uint32 value) {
   
-  ackbitmask_ = value;
-  // @@protoc_insertion_point(field_set:ReliableMessage.ackBitmask)
+  ack_bitmask_ = value;
+  // @@protoc_insertion_point(field_set:ReliableMessage.ack_bitmask)
 }
 
 // bytes payload = 5;
