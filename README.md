@@ -3,7 +3,7 @@ This is a collaboration project on reliable protocol over UDP for Linux systems.
 **Dependencies**
 - install protobuf to be able to compile this project
 
-**features:**
+**Features:**
 - reliability layer over UDP
 
 **Planed show-off:**  
