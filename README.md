@@ -3,18 +3,14 @@ This is a collaboration project on reliable protocol over UDP for Linux systems.
 **Dependencies**
 - install protobuf to be able to compile this project
 
-**Planed features:**
-- semi-reliability(with given timeout)
-- reliability(packets will get to the target until connection is lost)
-- ordering
-- congestion avoidance
+**features:**
+- reliability layer over UDP
 
 **Planed show-off:**  
+_Probably won't happen_
 Synchronization of big amount of physical objects.
 
-###Current usage
-Currently you can make two sockets talk to eachother.  
-Compile project.  
-call `./RUDP --port 8062` to start listening at port 8062 in first terminal  
-call `./RUDP --port 8063 --sendto 8062 --send` to start sending to 9062 on second terminal  
-Type stuff in the second terminal. All words will be sent as separate packages and printed in first terminal. 
+**Current usage**
+If you compile the project, you two reliable sockets will be created and connected over UDP at ports 8092 and 8094.   
+
+Each 10 ms a message will be sent from one socket to another and printed in console output. You can simulate package loss and latency using external tools like [tc](https://stackoverflow.com/questions/614795/simulate-delayed-and-dropped-packets-on-linux).
