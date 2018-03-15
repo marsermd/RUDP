@@ -2,6 +2,7 @@
 #include <cstring>
 #include <Messages/ReliableMessage.pb.h>
 #include <Core/UDP/Connection/Reliability/ReliableConnection.h>
+#include <Core/UDP/FakeSockets/FakeSocket.h>
 #include "Messages/StringMessage.pb.h"
 
 uint16_t listenPort = 0;
@@ -42,13 +43,13 @@ int main(int argc, char **argv)
     IPTarget a(127, 0, 0, 1, 8092);
     IPTarget b(127, 0, 0, 1, 8094);
 
-    auto socketA = std::unique_ptr<SocketBase>(new Socket());
+    auto socketA = std::unique_ptr<SocketBase>(new FakeSocket());
     if (!socketA->Open(a.GetPort()))
     {
         printf("failed to open socket!\n");
     }
 
-    auto socketB = std::unique_ptr<SocketBase>(new Socket());
+    auto socketB = std::unique_ptr<SocketBase>(new FakeSocket());
     if (!socketB->Open(b.GetPort()))
     {
         printf("failed to open socket!\n");

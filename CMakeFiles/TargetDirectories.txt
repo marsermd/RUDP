@@ -1,0 +1,3 @@
+/home/natalya/Documents/os/RUDP/CMakeFiles/rebuild_cache.dir
+/home/natalya/Documents/os/RUDP/CMakeFiles/edit_cache.dir
+/home/natalya/Documents/os/RUDP/CMakeFiles/RUDP.dir
