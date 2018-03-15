@@ -16,7 +16,6 @@ public:
     virtual bool Send(IPTarget sender, IPTarget to, const void* buffer, size_t size);
 private:
     std::map<IPTarget, std::queue<FakeMessage>> _portToMessageQueue;
-    int64_t ping;
 };
 
 

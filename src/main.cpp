@@ -3,6 +3,7 @@
 #include <Messages/ReliableMessage.pb.h>
 #include <Core/UDP/Connection/Reliability/ReliableConnection.h>
 #include <Core/UDP/FakeSockets/FakeSocket.h>
+#include <Core/UDP/FakeSockets/FakeNetwork.h>
 #include "Messages/StringMessage.pb.h"
 
 uint16_t listenPort = 0;
@@ -33,9 +34,10 @@ void OnMessageReceivedA(IPTarget target, std::shared_ptr<StringMessage> message)
 }
 void OnMessageReceivedB(IPTarget target, std::shared_ptr<StringMessage> message)
 {
-    //std::cout << "B received " << message->value() << " from " << target.GetPort() << std::endl;
+    std::cout << "B received " << message->value() << " from " << target.GetPort() << std::endl;
 }
 
+extern FakeNetwork connection;
 
 int main(int argc, char **argv)
 {
@@ -78,12 +80,14 @@ int main(int argc, char **argv)
 
         message->set_value(content);
 
-        A.PushMessage(b, message);
-        B.PushMessage(a, message);
+        {
+            A.PushMessage(b, message);
+            B.PushMessage(a, message);
+        }
         A.Update();
         B.Update();
 
-        uint32_t milliseconds = 10;
+        uint32_t milliseconds = 100;
         struct timespec ts;
         ts.tv_sec = milliseconds / 1000;
         ts.tv_nsec = (milliseconds % 1000) * 1000000;

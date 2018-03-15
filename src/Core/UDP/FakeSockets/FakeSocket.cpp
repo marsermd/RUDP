@@ -4,7 +4,7 @@
 FakeNetwork connection;
 bool FakeSocket::Open(uint16_t port)
 {
-    target = IPTarget(127, port);
+    target = IPTarget(127, 0, 0, 1, port);
     return true;
 }
 
@@ -24,7 +24,8 @@ ssize_t FakeSocket::Receive(IPTarget &sender,
                             void* data,
                             size_t size)
 {
-    return connection.TryRead(target, sender, data, size);
+    ssize_t i = connection.TryRead(target, sender, data, size);
+    return i;
 }
 
 bool FakeSocket::SetNonBlocking(bool nonBlocking)

@@ -17,11 +17,35 @@ void FakeMessage::Give(std::vector<uint8_t> &toBuffer, size_t bufferSize)
     }
 }
 
+size_t FakeMessage::getSize()
+{
+    return _buffer.size();
+}
+
 bool FakeMessage::isEmpty()
 {
     return _buffer.empty();
 }
 
+void FakeMessage::giveMessage() const
+{
+    for (int i = 0; i < _buffer.size(); i++) {
+        if ((_buffer[i] >= 'A' && _buffer[i] <= 'Z') || (_buffer[i] >= 'a' && _buffer[i] <= 'z'))
+            std::cout << _buffer[i] << ' ';
+        else
+            std::cout << (int)_buffer[i] << ' ';
+    }
+    std::cout << "\n";
+}
+
 const IPTarget &FakeMessage::get_from() const {
     return _from;
+}
+
+const milliseconds &FakeMessage::getPing() const {
+    return ping;
+}
+
+void FakeMessage::setPing(const milliseconds &ping) {
+    FakeMessage::ping = ping;
 }

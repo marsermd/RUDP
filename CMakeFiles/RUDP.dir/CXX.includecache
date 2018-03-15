@@ -23,8 +23,12 @@ cstdio
 -
 ctime
 -
+iostream
+-
 ../IPTarget.h
 /home/natalya/Documents/os/RUDP/src/Core/UDP/IPTarget.h
+chrono
+-
 
 /home/natalya/Documents/os/RUDP/src/Core/UDP/FakeSockets/FakeNetwork.cpp
 FakeNetwork.h
@@ -32,6 +36,10 @@ FakeNetwork.h
 ctime
 -
 vector
+-
+iostream
+-
+ctime
 -
 
 /home/natalya/Documents/os/RUDP/src/Core/UDP/FakeSockets/FakeNetwork.h
@@ -222,6 +230,8 @@ Messages/ReliableMessage.pb.h
 Core/UDP/Connection/Reliability/ReliableConnection.h
 -
 Core/UDP/FakeSockets/FakeSocket.h
+-
+Core/UDP/FakeSockets/FakeNetwork.h
 -
 Messages/StringMessage.pb.h
 /home/natalya/Documents/os/RUDP/src/Messages/StringMessage.pb.h
@@ -899,8 +909,26 @@ cstdio
 -
 ctime
 -
+iostream
+-
 ../IPTarget.h
 src/Core/UDP/IPTarget.h
+chrono
+-
+
+src/Core/UDP/FakeSockets/FakeNetwork.h
+stdio.h
+-
+queue
+-
+map
+-
+vector
+-
+../IPTarget.h
+src/Core/UDP/IPTarget.h
+FakeMessage.h
+src/Core/UDP/FakeSockets/FakeMessage.h
 
 src/Core/UDP/FakeSockets/FakeSocket.h
 cstdint
