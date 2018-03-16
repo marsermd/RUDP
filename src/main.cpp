@@ -8,6 +8,7 @@
 
 uint16_t listenPort = 0;
 IPTarget target;
+std::map <std::string, milliseconds> time_sent;
 std::shared_ptr<SocketBase> sock;
 
 void OnConnectedA(IPTarget target)
@@ -30,7 +31,11 @@ void OnDisconnectedB(IPTarget target)
 
 void OnMessageReceivedA(IPTarget target, std::shared_ptr<StringMessage> message)
 {
-    std::cout << "A received " << message->value() << " from " << target.GetPort() << std::endl;
+    milliseconds current = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+    );
+    std::cout << "A received " << message->value() << " from " << target.GetPort() << " time " <<
+              (current - time_sent[message->value()]).count() << std::endl;
 }
 void OnMessageReceivedB(IPTarget target, std::shared_ptr<StringMessage> message)
 {
@@ -79,11 +84,12 @@ int main(int argc, char **argv)
         std::string content("hello " + std::to_string(i));
 
         message->set_value(content);
-
-        {
-            A.PushMessage(b, message);
-            B.PushMessage(a, message);
-        }
+        A.PushMessage(b, message);
+        milliseconds current = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+        );
+        time_sent[content] = current;
+        B.PushMessage(a, message);
         A.Update();
         B.Update();
 

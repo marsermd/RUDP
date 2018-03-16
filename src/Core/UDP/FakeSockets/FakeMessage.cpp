@@ -30,10 +30,11 @@ bool FakeMessage::isEmpty()
 void FakeMessage::giveMessage() const
 {
     for (int i = 0; i < _buffer.size(); i++) {
-        if ((_buffer[i] >= 'A' && _buffer[i] <= 'Z') || (_buffer[i] >= 'a' && _buffer[i] <= 'z'))
+        if ((_buffer[i] >= 'A' && _buffer[i] <= 'Z') || (_buffer[i] >= 'a' && _buffer[i] <= 'z') ||
+                (_buffer[i] >= '0' && _buffer[i] <= '9'))
             std::cout << _buffer[i] << ' ';
         else
-            std::cout << (int)_buffer[i] << ' ';
+            std::cout << 'B' << (int)_buffer[i] << ' ';
     }
     std::cout << "\n";
 }

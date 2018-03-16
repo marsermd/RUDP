@@ -138,6 +138,18 @@ void UDPConnection<TMessage>::ReceiveMessages()
     ssize_t read;
     while ((read = _socket->Receive(sender, _buffer, _bufferSize)) > 0)
     {
+//        if (read > 0)
+//        {
+//            std::cout << "UDP ReceiveMessage ";
+//        }
+//        for (int i = 0; i < read; i++) {
+//            if ((_buffer[i] >= 'A' && _buffer[i] <= 'Z') || (_buffer[i] >= 'a' && _buffer[i] <= 'z') ||
+//                (_buffer[i] >= '0' && _buffer[i] <= '9'))
+//                std::cout << _buffer[i] << ' ';
+//            else
+//                std::cout << 'B' << (int)_buffer[i] << ' ';
+//        }
+//        std::cout << "\n";
         if (_target.Includes(sender))
         {
             //We don't want accidentally get some messages from targets we are not communicating with.
@@ -176,6 +188,19 @@ void UDPConnection<TMessage>::ReceiveMessage(const IPTarget &currentTarget, ssiz
     {
         auto message = std::make_shared<TMessage>();
         message->ParseFromArray(_buffer, messageSize);
+//        std::cout << "Payload in UDPConnection: '''" << message->payload() << "'''" << std::endl;
+//        if (message->payload() == "\n\bhello ")
+//        {
+//            for (int i = 0; i < messageSize; i++) {
+//                if ((_buffer[i] >= 'A' && _buffer[i] <= 'Z') || (_buffer[i] >= 'a' && _buffer[i] <= 'z') ||
+//                    (_buffer[i] >= '0' && _buffer[i] <= '9'))
+//                    std::cout << _buffer[i] << ' ';
+//                else
+//                    std::cout << 'B' << (int)_buffer[i] << ' ';
+//            }
+//            std::cout << "\n";
+//            std::cout << "WTF" << std::endl;
+//        }
         this->_onMessageReceived(currentTarget, message);
     }
 }

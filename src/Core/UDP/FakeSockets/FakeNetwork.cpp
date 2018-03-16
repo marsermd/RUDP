@@ -4,6 +4,8 @@
 #include <iostream>
 #include <ctime>
 
+int PACKETLOSSPERCENT = 99;
+
 uint16_t FakeNetwork::TakePort(IPTarget port)
 {
     if (port.GetPort() == 0)
@@ -31,26 +33,31 @@ ssize_t FakeNetwork::TryRead(IPTarget listenport, IPTarget &sender, void* buffer
     {
         mess.Give(buff, bufferSize);
         sender = mess.get_from();
-//        std::cout << "I get! ";
+//        std::cout << "I get! " << sender.GetPort() << ' ';
 //        mess.giveMessage();
         _portToMessageQueue[listenport].pop();
+
+        for (size_t i = 0; i < mess.getSize(); i++) {
+            static_cast<uint8_t *>(buffer)[i] = buff[i];
+        }
+
+//        std::cout << "Size is " << mess.getSize() << std::endl;
         return mess.getSize();
     }
-    std::cout << "(left " << (mess.timeSent + mess.getPing() - current).count() << " ms)" << std::endl;
+//    std::cout << "(left " << (mess.timeSent + mess.getPing() - current).count() << " ms)" << std::endl;
     return 0;
 }
 
 bool FakeNetwork::Send(IPTarget sender, IPTarget to, const void *buffer, size_t size)
 {
-//    std::cout << "I send! ";
-
-    if (rand() % 100 < 99){
+    if (rand() % 100 < PACKETLOSSPERCENT){
        return true;
     }
     FakeMessage m = FakeMessage(sender , buffer, size);
     srand(time(NULL));
-//    m.setPing(milliseconds(rand() % 100));
+    m.setPing(milliseconds(rand() % 100));
     _portToMessageQueue[to].push(m);
+//    std::cout << "I send " << sender.GetPort() << ' ';
 //    m.giveMessage();
     return true;
 }

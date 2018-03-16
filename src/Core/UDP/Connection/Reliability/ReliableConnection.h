@@ -54,7 +54,7 @@ private:
 
     void OnConnected(IPTarget target);
 
-    void SendMessage(IPTarget target, std::shared_ptr<ReliableMessage> &message);
+    void SendMessage(IPTarget target, std::shared_ptr<ReliableMessage> &messageToSend);
 
     TargetInfo& GetTargetInfo(IPTarget target);
 
@@ -138,18 +138,19 @@ void ReliableConnection<TMessage>::Update()
 }
 
 template <class TMessage>
-void ReliableConnection<TMessage>::SendMessage(IPTarget target, std::shared_ptr<ReliableMessage> &message)
+void ReliableConnection<TMessage>::SendMessage(IPTarget target, std::shared_ptr<ReliableMessage> &messageToSend)
 {
     TargetInfo& targetInfo = GetTargetInfo(target);
 
-    message->set_ack(targetInfo.m_lastReceivedPacket);
-    message->set_ack_bitmask(targetInfo.m_ackMask);
-    _connection->PushMessage(target, message);
+    messageToSend->set_ack(targetInfo.m_lastReceivedPacket);
+    messageToSend->set_ack_bitmask(targetInfo.m_ackMask);
+    _connection->PushMessage(target, messageToSend);
 }
 
 template <class TMessage>
 void ReliableConnection<TMessage>::OnMessageReceived(IPTarget target, std::shared_ptr<ReliableMessage> message)
 {
+//    std::cout << ' ' << message->payload() << std::endl;
     TargetInfo& targetInfo = GetTargetInfo(target);
 
     uint32_t sequence = message->sequence();
